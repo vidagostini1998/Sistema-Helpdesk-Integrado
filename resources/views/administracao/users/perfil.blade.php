@@ -21,10 +21,10 @@
         <div class="mb-2">
             <div class="text-center">
                 @if (auth()->user()->foto_perfil == null)
-                <img src="http://sistema-iap.test/img/default/profile.png" alt="" width="256"
+                <img src="{{ URL::asset('img/default/profile.jpg'); }}" alt="" width="256"
                 height="256" id="img_perfil" class=" rounded-circle">
                 @else
-                <img src="http://sistema-iap.test/img/profiles/{{auth()->user()->foto_perfil}}" alt="" width="256"
+                <img src="{{ URL::asset('img/profiles/'. auth()->user()->foto_perfil.''); }}" alt="" width="256"
                 height="256" id="img_perfil" class="rounded-circle">
                 @endif
                 <div class="mt-2">

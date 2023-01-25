@@ -49,10 +49,11 @@
                             class="btn d-inline-flex align-items-center rounded border-0 collapsed"
                             data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Ver Perfil">
                             @if (auth()->user()->foto_perfil == null)
-                            <img src="http://sistema-iap.test/img/default/profile.png" alt="" width="64" height="64"
+                            <img src="{{ URL::asset('img/default/profile.jpg'); }}" alt="" width="64" height="64"
                                 id="img_perfil" class=" rounded-circle">
                             @else
-                            <img src="http://sistema-iap.test/img/profiles/{{auth()->user()->foto_perfil}}" alt=""
+                            
+                            <img src="{{ URL::asset('img/profiles/'. auth()->user()->foto_perfil.''); }}" alt=""
                                 width="64" height="64" id="img_perfil" class="rounded-circle">
                             @endif
                         </a>
