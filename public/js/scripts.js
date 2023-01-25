@@ -166,3 +166,9 @@ $(document).on('click', '#modal_edit_patrimonio', function () {
         $('#editModal').modal('show');
     })
 });
+
+//
+
+//Manutenção
+
+//

@@ -42,7 +42,7 @@
         </div>
         @endif
     </div>
-    <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+    <ul class="nav nav-tabs nav-fill mt-3" id="myTab" role="tablist">
         @foreach ($filiais as $filial)
         @php
         $nome = str_replace("'","",$filial->nome_filial);
@@ -59,10 +59,10 @@
     <div class="tab-content" id="myTabContent">
         @foreach ($filiais as $filial)
         @php
-        
+
         $nome = str_replace("'","",$filial->nome_filial);
         @endphp
-        <div class="tab-pane fade show" id="{{str_replace(' ','',$nome)}}-tab-pane" role="tabpanel"
+        <div class="tab-pane fade" id="{{str_replace(' ','',$nome)}}-tab-pane" role="tabpanel"
             aria-labelledby="{{str_replace(' ','',$nome)}}-tab" tabindex="0">
             <div class="table-responsive">
                 <table class="styled-table text-center table-sm p-2" style="width: 100%">
@@ -78,15 +78,15 @@
                             <th hidden>Obs</th>
                             <th>Status</th>
                             <th>Patrimonio</th>
-                            <th>Local</th>
-                            <th>Filial</th>
                             <th hidden>Adc. Por</th>
+                            <th hidden>Prestador</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         @foreach ($manuts as $manut)
-                        @if ($manut->id_filial == $filial->id)
+                        @if ($manut->patrimonio->id_filial == $filial->id)
                         <tr>
                             <td>{{$manut->data_manutencao}}</td>
                             <td>{{$manut->data_realizada}}</td>
@@ -98,22 +98,68 @@
                             <td hidden>{{$manut->obs_manutencao}}</td>
                             <td>{{$manut->status_manutencao}}</td>
                             <td>{{$manut->patrimonio->patrimonio}}</td>
-                            <td>{{$manut->local->nome_local}}</td>
-                            <td>{{$manut->filial->nome_filial}}</td>
                             <td hidden>{{$manut->user->nome}}</td>
+                            <td hidden>{{$manut->prestadores->nome_prestador}}</td>
+                            <td><button type="button" class="btn btn-warning" id="edit_modal" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-title="Editar Manutenção"><i
+                                        class="fa-solid fa-pen-to-square"></i></button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-title="Excluir Manutenção"><i
+                                        class="fa-solid fa-trash-can"></i></button></td>
                         </tr>
                         @endif
-                        
+
                         @endforeach
-                            
-                        
+
+
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
         @endforeach
     </div>
 
+</div>
+
+{{-- Modal Adicionar Manutenção --}}
+<div class="modal fade modal-lg" id="adcModal" tabindex="-1" aria-labelledby="adcModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Manutenção</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3" action="{{route('patrimonio.adc')}}" method="POST" id="form_adc_patrimonio">
+                    @csrf
+                    <input type="hidden" name="id_user" value="{{auth()->user()->id}}">
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input type="date" name="data_manutencao" class="form-control" id="data_manutencao">
+                            <label for="data_manutencao" class="form-label">Data Manutenção</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input type="date" name="data_realizada" id="data_realizada" class="form-control">
+                            <label for="data_realizada" class="form-label">Data Realizada</label>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-save" class="btn btn-danger" data-bs-dismiss="modal"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sair"><i
+                        class="fa-regular fa-circle-xmark fa-lg"></i></button>
+                <button type="button" class="btn btn-success" onclick="adc_patrimonio()" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-title="Salvar"><i
+                        class="fa-regular fa-floppy-disk fa-lg"></i></button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

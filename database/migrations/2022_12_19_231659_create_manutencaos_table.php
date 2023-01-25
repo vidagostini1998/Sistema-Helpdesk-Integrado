@@ -26,10 +26,6 @@ return new class extends Migration
             $table->boolean('status_manutencao');
             $table->unsignedBigInteger('id_patrimonio')->nullable();
             $table->foreign('id_patrimonio')->references('id')->on('patrimonios')->onDelete('set null')->onUpdate('cascade');
-            $table->unsignedBigInteger('id_local')->nullable();
-            $table->foreign('id_local')->references('id')->on('locals')->onDelete('set null')->onUpdate('cascade');
-            $table->unsignedBigInteger('id_filial')->nullable();
-            $table->foreign('id_filial')->references('id')->on('filials')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('id_user')->nullable();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();

@@ -19,9 +19,8 @@ class Manutencao extends Model
         'obs_manutencao',
         'status_manutencao',
         'id_patrimonio',
-        'id_local',
-        'id_filial',
-        'id_user'
+        'id_user',
+        'id_prestador'
 
     ];
 
@@ -29,16 +28,12 @@ class Manutencao extends Model
         return $this->belongsTo(User::class,'id_user');
     }
 
-    public function local(){
-        return $this->belongsTo(Local::class,'id_local');
-    }
-
-    public function filial(){
-        return $this->belongsTo(Filial::class,'id_filial');
-    }
-
     public function patrimonio(){
         return $this->belongsTo(Patrimonios::class,'id_patrimonio');
+    }
+
+    public function prestadores(){
+        return $this->belongsTo(Prestadores::class,'id_prestador');
     }
 
     
