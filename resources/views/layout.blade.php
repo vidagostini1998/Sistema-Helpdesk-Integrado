@@ -70,7 +70,7 @@
                                 <li><a href="#"
                                         class="link-dark d-inline-flex text-decoration-none rounded">Chamados/Pedidos</a>
                                 </li>
-                                <li><a href="#"
+                                <li><a href="{{route('manutencao')}}"
                                         class="link-dark d-inline-flex text-decoration-none rounded">Manutenções</a>
                                 </li>
                                 <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded"

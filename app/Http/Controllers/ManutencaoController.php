@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Filial;
 use App\Models\Manutencao;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class ManutencaoController extends Controller
      */
     public function index()
     {
-        //
+        $filiais = Filial::all(['id','nome_filial']);
+        $manuts = Manutencao::all();
+        return view('manutencao/manutencao',compact('filiais','manuts'));
     }
 
     /**

@@ -31,15 +31,15 @@ class Patrimonios extends Model
     }
 
     public function local(){
-        return $this->belongsTo(Local::class,'id');
+        return $this->belongsTo(Local::class,'id_local');
     }
 
     public function categoria(){
-        return $this->belongsTo(CategoriaPatrimonio::class,'id');
+        return $this->belongsTo(CategoriaPatrimonio::class,'id_categoria');
     }
 
     public function filial(){
-        return $this->belongsTo(Filial::class,'id');
+        return $this->belongsTo(Filial::class,'id_filial');
     }
 
 }

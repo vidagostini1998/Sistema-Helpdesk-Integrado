@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\FilialController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ManutencaoController;
 use App\Http\Controllers\PatrimoniosController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UserController;
@@ -88,5 +89,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cadastros/patrimonios/edit_patrimonio/{id}',[PatrimoniosController::class,'edit'])->name('patrimonio.show');
     Route::post('/cadastros/patrimonios/editar',[PatrimoniosController::class,'update'])->name('patrimonio.edit');
     //
+
+    //Manutenção
+    Route::get('/manutencao',[ManutencaoController::class,'index'])->name('manutencao');
 
 });
