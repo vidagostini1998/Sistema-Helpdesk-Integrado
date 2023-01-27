@@ -145,29 +145,50 @@ function edit_patrimonio() {
 }
 
 $(document).on('click', '#modal_edit_patrimonio', function () {
+    
     var id = $(this).val();
     $.get('/cadastros/patrimonios/edit_patrimonio/' + id, function (data_patrimonio) {
         //success data
         //console.log(data_patrimonio);
-        $('#id_patri').val(data_patrimonio.id);
-        $('#patrimonio_patri').val(data_patrimonio.patrimonio);
-        $('#nome_patri').val(data_patrimonio.nome);
-        $('#marca_patri').val(data_patrimonio.marca);
-        $('#modelo_patri').val(data_patrimonio.modelo);
-        $('#n_serie_patri').val(data_patrimonio.n_serie);
-        $('#fornecedor_patri').val(data_patrimonio.fornecedor);
-        $('#ref_patri').text(data_patrimonio.ref);
-        $('#obs_patrimonio_patri').text(data_patrimonio.obs_patrimonio);
-        $('#situacao_patri').val(data_patrimonio.situacao);
-        $('#motivo_situacao_patri').text(data_patrimonio.motivo_situacao);
-        $('#local_patri').val(data_patrimonio.id_local);
-        $('#categoria_patri').val(data_patrimonio.id_categoria);
-        $('#filial_patri').val(data_patrimonio.id_filial);
+        //Mandando dados para modal
+        $('#id_patri').val(data_patrimonio[0].id);
+        $('#id_patrimonio').val(data_patrimonio[0].id);
+        $('#patrimonio_patri').val(data_patrimonio[0].patrimonio);
+        $('#nome_patri').val(data_patrimonio[0].nome);
+        $('#marca_patri').val(data_patrimonio[0].marca);
+        $('#modelo_patri').val(data_patrimonio[0].modelo);
+        $('#n_serie_patri').val(data_patrimonio[0].n_serie);
+        $('#fornecedor_patri').val(data_patrimonio[0].fornecedor);
+        $('#ref_patri').text(data_patrimonio[0].ref);
+        $('#obs_patrimonio_patri').text(data_patrimonio[0].obs_patrimonio);
+        $('#preventiva').val(data_patrimonio[0].manut_preventiva);
+        $('#local_patri').val(data_patrimonio[0].id_local);
+        $('#categoria_patri').val(data_patrimonio[0].id_categoria);
+        $('#filial_patri').val(data_patrimonio[0].id_filial);
+        $("#table tr td").remove();
+        //
+
+        //Inserindo dados na tabela Situação
+        let tbody = document.getElementById('tbody');
+        for(let i = 0;i < data_patrimonio[1].length;i++){
+            let tr = tbody.insertRow();
+            let td_data=tr.insertCell();
+            let td_motivo=tr.insertCell();
+            let td_adc=tr.insertCell();
+            let td_btn=tr.insertCell();
+
+            td_data.innerText = data_patrimonio[1][i].data_situacao;
+            td_motivo.innerText = data_patrimonio[1][i].motivo_situacao;
+            td_adc.innerText = data_patrimonio[1][i].nome;
+            td_btn.innerHTML = "<button type='button' class='btn btn-warning'><i class='fa-solid fa-pen-to-square'></i></button> <button type='button' class='btn btn-danger'><i class='fa-solid fa-trash'></i></button>";
+        }
+        //
+
         $('#editModal').modal('show');
     })
 });
-
 //
+
 
 //Manutenção
 

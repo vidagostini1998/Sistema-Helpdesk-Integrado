@@ -23,8 +23,8 @@
     <h2 class="text-center">Patrimonios</h2>
     <div class="text-center">
         <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Adicionar Patrimonio">
-            <button class="btn btn-success" id="adc_patrimonio" onclick="reset()" data-bs-toggle="modal" data-bs-target="#adcModal"><i
-                    class="fa-solid fa-plus"></i></button>
+            <button class="btn btn-success" id="adc_patrimonio" onclick="reset()" data-bs-toggle="modal"
+                data-bs-target="#adcModal"><i class="fa-solid fa-plus"></i></button>
         </div>
         @if ($mensagem = Session::get('msg'))
         <div class="d-flex justify-content-center">
@@ -57,7 +57,6 @@
                     <th>Ref</th>
                     <th hidden>Obs Patrimonio</th>
                     <th>Situação</th>
-                    <th>Motivo Situação</th>
                     <th>Categoria</th>
                     <th>Filial</th>
                     <th>Local</th>
@@ -68,13 +67,7 @@
             </thead>
             <tbody>
                 @foreach ($patrimonios as $patrimonio)
-                @if ($patrimonio->situacao == 1)
                 <tr>
-                    @elseif($patrimonio->situacao == 2)
-                <tr style="background-color: darkorange; color:white">
-                    @else
-                <tr style="background-color: firebrick; color:white">
-                    @endif
                     <td>{{$patrimonio->patrimonio}}</td>
                     <td>{{$patrimonio->nome}}</td>
                     <td hidden>{{$patrimonio->marca}}</td>
@@ -83,13 +76,6 @@
                     <td hidden>{{$patrimonio->fornecedor}}</td>
                     <td>{{$patrimonio->ref}}</td>
                     <td hidden>{{$patrimonio->obs_patrimonio}}</td>
-                    @if ($patrimonio->situacao == 1)
-                    <td>Ativo</td>
-                    @elseif ($patrimonio->situacao == 2)
-                    <td>Em manutenção</td>
-                    @else
-                    <td>Inativo</td>
-                    @endif
                     <td>{{$patrimonio->motivo_situacao}}</td>
                     <td>{{$patrimonio->categoria->nome_cate_patrimonio}}</td>
                     <td>{{$patrimonio->filial->nome_filial}}</td>
@@ -177,28 +163,17 @@
                             <label for="obs_patrimonio" class="form-label">OBS</label>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-floating">
-                            <select class="form-select" id="situacao" name="situacao" aria-label="Situação">
-                                <option selected>Selecione</option>
-                                <option value="1">Ativo</option>
-                                <option value="2">Em Manutenção</option>
-                                <option value="0">Inativo</option>
+                            <select name="manut_preventiva" id="manut_preventiva" class="form-select">
+                                <option>Selecione</option>
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
                             </select>
-                            <label for="situacao">Situação</label>
+                            <label for="preventiva">Faz Preventiva?</label>
                         </div>
                     </div>
-
-                    <div class="col-md-8">
-                        <div class="form-floating">
-                            <textarea class="form-control" style="height: 80px" name="motivo_situacao"
-                                id="motivo_situacao" cols="3" rows="5"></textarea>
-                            <label for="motivo_situacao" class="form-label">Motivo Situação</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="form-floating">
                             <select class="form-select" id="categoria" name="id_categoria" aria-label="Categoria">
                                 <option selected>Selecione</option>
@@ -320,27 +295,35 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="styled-table text-center p-2 w-100" id="table">
+                                <thead>
+                                    <tr>
+                                        <th>Data Situação</th>
+                                        <th>Motivo</th>
+                                        <th>Adc. Por</th>
+                                        <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Adicionar Situação"><button type="button" id="btn_situ" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#adcSituModal"><i class="fa-solid fa-plus"></i></button></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-floating">
-                            <select class="form-select" id="situacao_patri" name="situacao" aria-label="Situação">
+                            <select id="preventiva" name="manut_preventiva" class="form-select" aria-label="Faz Preventiva?">
                                 <option>Selecione</option>
-                                <option value="1">Ativo</option>
-                                <option value="2">Em Manutenção</option>
-                                <option value="0">Inativo</option>
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
                             </select>
-                            <label for="situacao">Situação</label>
+                            <label for="preventiva">Faz Preventiva?</label>
                         </div>
                     </div>
-
-                    <div class="col-md-8">
-                        <div class="form-floating">
-                            <textarea class="form-control" style="height: 80px" name="motivo_situacao"
-                                id="motivo_situacao_patri" cols="3" rows="5"></textarea>
-                            <label for="motivo_situacao" class="form-label">Motivo Situação</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="form-floating">
                             <select class="form-select" id="categoria_patri" name="id_categoria" aria-label="Categoria">
                                 <option>Selecione</option>
@@ -377,6 +360,44 @@
                     </div>
 
 
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-save" class="btn btn-danger" data-bs-dismiss="modal"
+                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sair"><i
+                        class="fa-regular fa-circle-xmark fa-lg"></i></button>
+                <button type="button" class="btn btn-success" onclick="edit_patrimonio()" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-title="Salvar"><i
+                        class="fa-regular fa-floppy-disk fa-lg"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Adc Situação --}}
+<div class="modal fade modal-lg" id="adcSituModal" tabindex="-1" aria-labelledby="adcSituModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Situação</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3" action="{{route('patrimonio.edit')}}" method="POST" id="form_adc_situacao">
+                    @csrf
+                    <input type="hidden" name="id_patrimonio" id="id_patrimonio">
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input class="form-control" type="date" name="data_situacao" id="data_situacao">
+                            <label for="data_situacao">Data</label>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-floating">
+                            <textarea class="form-control" name="motivo_situacao" id="motivo" style="height: 80px" cols="3" rows="5"></textarea>
+                            <label for="motivo" class="form-label">Motivo Situação</label>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

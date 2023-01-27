@@ -6,8 +6,10 @@ use App\Models\CategoriaPatrimonio;
 use App\Models\Filial;
 use App\Models\Local;
 use App\Models\Patrimonios;
+use App\Models\SituacaoPatrimonio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PatrimoniosController extends Controller
@@ -70,7 +72,8 @@ class PatrimoniosController extends Controller
     public function edit($id)
     {
         $patrimonio = Patrimonios::findOrFail($id);
-        return $patrimonio;
+        $situacao = DB::table('situacao_patrimonios')->join('users','situacao_patrimonios.id_user','=','users.id')->where('id_patrimonio',$id)->select('situacao_patrimonios.*','users.nome')->get();
+        return array($patrimonio,$situacao);
     }
 
     /**

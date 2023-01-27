@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('fornecedor')->nullable();
             $table->string('ref')->nullable();
             $table->longText('obs_patrimonio')->nullable();
-            $table->boolean('situacao')->default(1);
-            $table->longText('motivo_situacao')->nullable();
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('id_local')->nullable();

@@ -18,12 +18,11 @@ class Patrimonios extends Model
         'fornecedor',
         'ref',
         'obs_patrimonio',
-        'situacao',
-        'motivo_situacao',
         'id_user',
         'id_local',
         'id_categoria',
         'id_filial',
+        'manut_preventiva',
     ];
 
     public function user(){
@@ -41,5 +40,6 @@ class Patrimonios extends Model
     public function filial(){
         return $this->belongsTo(Filial::class,'id_filial');
     }
+
 
 }
